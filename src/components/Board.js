@@ -24,7 +24,13 @@ class Board extends React.Component{
 
         return(
             <div className="container">
+                <div> {this.props.gameover==true 
+                        ? (<div className="result"><h4>{this.props.currentPlayer} Won !!</h4></div>)
+                        : (<div className="result hide"> </div>)}
+                </div>
+                <div className="boardcontainer">
                 {elem}
+                </div>
             </div>
         )
     }
@@ -46,7 +52,8 @@ function mapDispatchToProps(dispatch){
 function mapStateToProps(state){
     return{
         board: state.board,
-        currentPlayer:state.currentPlayer//P1
+        currentPlayer:state.currentPlayer,
+        gameover:state.gameover
     }
 }   
 

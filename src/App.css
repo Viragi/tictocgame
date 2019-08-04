@@ -1,9 +1,16 @@
 .container{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 60px;
+}
+.boardcontainer{
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
   margin: auto;
-  padding-top:200px;
+  padding-top:150px;
   height: 300px; 
   width: 300px;
   /* border: solid black 1px; */
@@ -28,4 +35,8 @@
   align-items: center;
   justify-content: center;
   font-size: 50px;
+}
+
+.result{
+  height: 20px;
 }
