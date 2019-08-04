@@ -3,7 +3,8 @@ let initialState={
     P1:"O",
     P2:"X",
     currentPlayer:"P1",
-    gameover:false
+    gameover:false,
+    count:0
 };
 
 let rootReducer=(state=initialState, action)=>{
@@ -12,13 +13,22 @@ let rootReducer=(state=initialState, action)=>{
         newBoard[action.col] =[...newBoard[action.col]];
         newBoard[action.col][action.row]= state[action.player];
         let gameStatus= checkWin(newBoard,action.col,action.row,state[action.player]);
-        console.log("gamestatus here",gameStatus);
         let newPlayer = action.player;
         if(!gameStatus){
             newPlayer= state[action.player] == "O" ? "P2" : "P1";
         }
-        return {...state,board:newBoard,currentPlayer:newPlayer,gameover:gameStatus};
+        let newCount = state.count+1;
+        if(newCount>=9){
+            gameStatus=true
+        }
+        return {...state,board:newBoard,currentPlayer:newPlayer,gameover:gameStatus,count:newCount};
         
+    }else if(action.type == "restart"){
+           let newState ={...state};
+           newState.gameover= false;
+           newState.count= 0;
+           newState.board=[[null,null,null],[null,null,null],[null,null,null]]
+           return {...newState}
     }else{
         return state;
     }
@@ -64,7 +74,7 @@ function checkWin(arr,col,row, sign){
         isWon=true;
     }
    // left diagonal win
-   for(let i=arr.length-1,j=0;i<arr.length;i--,j++){    
+   for(let i=arr.length-1,j=0;i>=0;i--,j++){    
         if(arr[j][i]!=sign){
             isWon=false;
             break;

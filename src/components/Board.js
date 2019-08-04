@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 
 class Board extends React.Component{
     render(){
-       // console.log(this.props);
         let elem = this.props.board.map((item,i)=>{
             return(
                 <div className="col">
@@ -21,12 +20,24 @@ class Board extends React.Component{
             )
 
         })
-
+        let resElem;
+        if(this.props.gameover==true && this.props.count<9){
+            resElem = <div className="result"><h4>{this.props.currentPlayer == "P1" ? "Player 1" : "Player 2"} Won !!</h4></div>
+        }else if(this.props.gameover==true && this.props.count>=9){
+            resElem = <div className="result"><h4>Its A Draw !!</h4></div>
+        }else{
+            resElem = <div className="result hide"> </div>
+        }
+        console.log(this.props);
         return(
             <div className="container">
-                <div> {this.props.gameover==true 
-                        ? (<div className="result"><h4>{this.props.currentPlayer} Won !!</h4></div>)
-                        : (<div className="result hide"> </div>)}
+                <div className="resultboard"> 
+                        {resElem}
+                        {this.props.gameover==true
+                        ?(<button className="restart" onClick = {this.props.restart}>Restart</button>)
+                        :null
+                        }
+
                 </div>
                 <div className="boardcontainer">
                 {elem}
@@ -44,7 +55,12 @@ function mapDispatchToProps(dispatch){
             col:i,
             row:j,
             player:player
-        })}
+        })},
+        restart : ()=>{
+            dispatch({
+                type:"restart"
+            })
+        }
     }
 }
 
@@ -53,7 +69,8 @@ function mapStateToProps(state){
     return{
         board: state.board,
         currentPlayer:state.currentPlayer,
-        gameover:state.gameover
+        gameover:state.gameover,
+        count:state.count
     }
 }   
 
