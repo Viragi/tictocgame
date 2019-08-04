@@ -42,6 +42,7 @@ class Board extends React.Component{
                 <div className="boardcontainer">
                 {elem}
                 </div>
+                <div> Now Playing : {this.props.currentPlayer == "P1" ? "Player 1" : "Player 2"}</div>
             </div>
         )
     }
